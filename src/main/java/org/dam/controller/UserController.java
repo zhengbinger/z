@@ -7,10 +7,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.dam.common.enums.ResultCode;
 import org.dam.common.response.Result;
+import org.dam.component.security.annotation.RequiresPermission;
 import org.dam.component.status.UserStatus;
 import org.dam.dto.UserPageDTO;
+import org.dam.dto.UserRoleAssignDTO;
 import org.dam.dto.UserSaveDTO;
 import org.dam.service.UserService;
+import org.dam.vo.UserRoleVO;
 import org.dam.vo.UserVO;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +30,7 @@ import javax.validation.Valid;
 
 /**
  * 用户管理 Controller
- * 提供用户的分页查询、详情、新增、修改、删除接口
+ * 提供用户的分页查询、详情、新增、修改、删除、状态变更、角色分配接口
  *
  * @author zhengbing
  * @since 2026-08-18
@@ -35,7 +38,7 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequestMapping("/user")
-@Tag(name = "用户管理", description = "用户的增删改查接口")
+@Tag(name = "用户管理", description = "用户的增删改查、状态变更及角色分配接口")
 public class UserController {
 
     @Resource
@@ -49,6 +52,7 @@ public class UserController {
      */
     @PostMapping("/page")
     @Operation(summary = "分页查询用户", description = "支持按用户名、手机号、状态过滤")
+    @RequiresPermission("user:list")
     public Result<Page<UserVO>> page(@Valid @RequestBody UserPageDTO pageDTO) {
         Page<UserVO> page = userService.pageUser(pageDTO);
         return Result.success(page);
@@ -62,6 +66,7 @@ public class UserController {
      */
     @GetMapping("/{id}")
     @Operation(summary = "查询用户详情")
+    @RequiresPermission("user:get")
     public Result<UserVO> get(@Parameter(description = "用户 ID", required = true) @PathVariable Long id) {
         UserVO vo = userService.getUserById(id);
         return Result.success(vo);
@@ -75,6 +80,7 @@ public class UserController {
      */
     @PostMapping
     @Operation(summary = "新增用户")
+    @RequiresPermission("user:add")
     public Result<Long> save(@Valid @RequestBody UserSaveDTO saveDTO) {
         Long id = userService.saveUser(saveDTO);
         return Result.success(id);
@@ -88,6 +94,7 @@ public class UserController {
      */
     @PutMapping
     @Operation(summary = "修改用户")
+    @RequiresPermission("user:update")
     public Result<Boolean> update(@Valid @RequestBody UserSaveDTO saveDTO) {
         Boolean success = userService.updateUser(saveDTO);
         return Result.success(success);
@@ -101,6 +108,7 @@ public class UserController {
      */
     @DeleteMapping("/{id}")
     @Operation(summary = "删除用户")
+    @RequiresPermission("user:delete")
     public Result<Boolean> remove(@Parameter(description = "用户 ID", required = true) @PathVariable Long id) {
         Boolean success = userService.removeUser(id);
         return Result.success(success);
@@ -116,6 +124,7 @@ public class UserController {
      */
     @PutMapping("/{id}/status")
     @Operation(summary = "变更用户状态", description = "观察者模式演示：状态变化触发对应处理器执行后续逻辑")
+    @RequiresPermission("user:update")
     public Result<Boolean> changeStatus(
             @Parameter(description = "用户 ID", required = true) @PathVariable Long id,
             @Parameter(description = "目标状态码（0-禁用，1-启用，2-锁定，3-待审核）", required = true)
@@ -127,6 +136,34 @@ public class UserController {
         }
         Boolean success = userService.changeUserStatus(id, targetStatus);
         return Result.success(success);
+    }
+
+    /**
+     * 给用户分配角色（全量覆盖）
+     *
+     * @param assignDTO 用户分配角色参数
+     * @return 是否分配成功
+     */
+    @PutMapping("/roles")
+    @Operation(summary = "给用户分配角色", description = "全量覆盖：传入的 roleIds 即为该用户的最终角色集合")
+    @RequiresPermission("user:assignRole")
+    public Result<Boolean> assignRoles(@Valid @RequestBody UserRoleAssignDTO assignDTO) {
+        Boolean success = userService.assignRoles(assignDTO);
+        return Result.success(success);
+    }
+
+    /**
+     * 查询用户已分配的角色列表
+     *
+     * @param id 用户 ID
+     * @return 用户角色视图对象
+     */
+    @GetMapping("/{id}/roles")
+    @Operation(summary = "查询用户角色列表", description = "返回用户信息及已分配的角色集合")
+    @RequiresPermission("user:get")
+    public Result<UserRoleVO> listRoles(@Parameter(description = "用户 ID", required = true) @PathVariable Long id) {
+        UserRoleVO vo = userService.listUserRoles(id);
+        return Result.success(vo);
     }
 
 }

@@ -3,8 +3,9 @@ package org.dam.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.dam.component.status.UserStatus;
 import org.dam.dto.UserPageDTO;
+import org.dam.dto.UserRoleAssignDTO;
 import org.dam.dto.UserSaveDTO;
-import org.dam.entity.User;
+import org.dam.vo.UserRoleVO;
 import org.dam.vo.UserVO;
 
 /**
@@ -66,5 +67,23 @@ public interface UserService {
      * @return 是否变更成功（状态未变化时返回 false）
      */
     Boolean changeUserStatus(Long id, UserStatus targetStatus);
+
+    /**
+     * 给用户分配角色（全量覆盖）
+     * 传入的 roleIds 即为该用户的最终角色集合，
+     * 移除不在列表中的旧关联，补齐新关联
+     *
+     * @param assignDTO 用户分配角色参数
+     * @return 是否分配成功
+     */
+    Boolean assignRoles(UserRoleAssignDTO assignDTO);
+
+    /**
+     * 查询用户已分配的角色列表
+     *
+     * @param userId 用户 ID
+     * @return 用户角色视图对象（包含用户信息和角色集合）
+     */
+    UserRoleVO listUserRoles(Long userId);
 
 }

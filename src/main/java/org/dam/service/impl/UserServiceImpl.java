@@ -13,17 +13,25 @@ import org.dam.component.status.UserStatus;
 import org.dam.component.status.UserStatusChangeEvent;
 import org.dam.component.status.UserStatusChangePublisher;
 import org.dam.dto.UserPageDTO;
+import org.dam.dto.UserRoleAssignDTO;
 import org.dam.dto.UserSaveDTO;
+import org.dam.entity.Role;
 import org.dam.entity.User;
+import org.dam.entity.UserRole;
+import org.dam.mapper.RoleMapper;
 import org.dam.mapper.UserMapper;
+import org.dam.mapper.UserRoleMapper;
 import org.dam.service.UserService;
+import org.dam.vo.UserRoleVO;
 import org.dam.vo.UserVO;
+import org.dam.vo.RoleVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * 用户服务实现类
@@ -52,6 +60,12 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private UserRoleMapper userRoleMapper;
+
+    @Resource
+    private RoleMapper roleMapper;
 
     @Resource
     private UserStatusChangePublisher userStatusChangePublisher;
@@ -192,6 +206,91 @@ public class UserServiceImpl implements UserService {
             userStatusChangePublisher.publish(event);
         }
         return rows > 0;
+    }
+
+    /**
+     * 给用户分配角色（全量覆盖）
+     * 全量覆盖策略：移除不在新列表中的旧关联，补齐新关联；同事务保证一致性
+     *
+     * @param assignDTO 用户分配角色参数
+     * @return 是否分配成功
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean assignRoles(UserRoleAssignDTO assignDTO) {
+        Long userId = assignDTO.getUserId();
+        List<Long> roleIds = assignDTO.getRoleIds();
+        if (Objects.isNull(userId)) {
+            throw new BizException(ResultCode.PARAM_VALIDATE_FAILED, "用户 ID 不能为空");
+        }
+        if (CollUtil.isEmpty(roleIds)) {
+            throw new BizException(ResultCode.PARAM_VALIDATE_FAILED, "角色 ID 集合不能为空");
+        }
+        User user = userMapper.selectById(userId);
+        if (Objects.isNull(user)) {
+            throw new BizException(ResultCode.NOT_FOUND, "用户不存在");
+        }
+        log.info("给用户分配角色，userId={}，roleIds={}", userId, roleIds);
+
+        // 1. 查询当前用户已关联的角色 ID 集合
+        LambdaQueryWrapper<UserRole> existWrapper = Wrappers.lambdaQuery(UserRole.class)
+                .eq(UserRole::getUserId, userId);
+        List<UserRole> existList = userRoleMapper.selectList(existWrapper);
+        List<Long> existRoleIds = existList.stream()
+                .map(UserRole::getRoleId)
+                .collect(Collectors.toList());
+
+        // 2. 计算需要删除的差集（旧关联 - 新列表）
+        List<Long> toRemoveIds = existRoleIds.stream()
+                .filter(id -> !roleIds.contains(id))
+                .collect(Collectors.toList());
+        if (CollUtil.isNotEmpty(toRemoveIds)) {
+            LambdaQueryWrapper<UserRole> removeWrapper = Wrappers.lambdaQuery(UserRole.class)
+                    .eq(UserRole::getUserId, userId)
+                    .in(UserRole::getRoleId, toRemoveIds);
+            userRoleMapper.delete(removeWrapper);
+            log.info("移除用户旧角色关联，userId={}，removedRoleIds={}", userId, toRemoveIds);
+        }
+
+        // 3. 计算需要新增的差集（新列表 - 旧关联）
+        List<Long> toAddIds = roleIds.stream()
+                .filter(id -> !existRoleIds.contains(id))
+                .distinct()
+                .collect(Collectors.toList());
+        if (CollUtil.isNotEmpty(toAddIds)) {
+            String createBy = "system";
+            for (Long roleId : toAddIds) {
+                UserRole userRole = new UserRole();
+                userRole.setUserId(userId);
+                userRole.setRoleId(roleId);
+                userRole.setCreateBy(createBy);
+                userRoleMapper.insert(userRole);
+            }
+            log.info("新增用户角色关联，userId={}，addedRoleIds={}", userId, toAddIds);
+        }
+        return Boolean.TRUE;
+    }
+
+    /**
+     * 查询用户已分配的角色列表
+     *
+     * @param userId 用户 ID
+     * @return 用户角色视图对象（包含用户信息和角色集合）
+     */
+    @Override
+    public UserRoleVO listUserRoles(Long userId) {
+        log.info("查询用户角色列表，userId={}", userId);
+        User user = userMapper.selectById(userId);
+        if (Objects.isNull(user)) {
+            throw new BizException(ResultCode.NOT_FOUND, "用户不存在");
+        }
+        UserRoleVO vo = new UserRoleVO();
+        vo.setUserId(userId);
+        vo.setUsername(user.getUsername());
+        List<Role> roles = roleMapper.selectRolesByUserId(userId);
+        List<RoleVO> roleVOList = BeanUtil.copyToList(roles, RoleVO.class);
+        vo.setRoles(CollUtil.isNotEmpty(roleVOList) ? roleVOList : CollUtil.newArrayList());
+        return vo;
     }
 
     /**
