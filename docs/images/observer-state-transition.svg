@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" width="100%" height="auto" role="img" aria-label="User status transition diagram">
+  <style>
+    .surface-muted { fill: #EFEFF2; }
+    .text { fill: #171717; }
+    .text-muted { fill: #52525B; }
+    .brand { stroke: #4B3FE3; }
+    .brand-text { fill: #1A1759; }
+    .brand-soft { fill: #F2F7FF; }
+    .accent-text { fill: #0F766E; }
+    .warning { stroke: #EFAA17; }
+    .warning-soft { fill: #FEF5E7; }
+    .warning-text { fill: #EFAA17; }
+
+    .stateNodeBg { fill: #F7F7F8; stroke: rgba(23, 23, 23, 0.11); stroke-width: 1.2; }
+    .stateNodeBg.focus { fill: #F2F7FF; stroke: #4B3FE3; stroke-width: 1.6; }
+    .stateNodeBg.warning { fill: #FEF5E7; stroke: #EFAA17; stroke-width: 1.4; }
+    .stateNodeBg.muted { fill: rgba(82, 82, 91, 0.08); stroke: rgba(82, 82, 91, 0.5); stroke-width: 1.2; }
+
+    .stateLabel { fill: #171717; font: 500 14px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+    .stateLabel.focus { fill: #1A1759; }
+    .stateLabel.warning { fill: #EFAA17; }
+    .stateCaption { fill: #52525B; font: 400 12px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+
+    .transitionPath { fill: none; stroke: rgba(82, 82, 91, 0.72); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .transitionPath.primary { stroke: #4B3FE3; stroke-width: 1.8; }
+    .transitionPath.warning { stroke: #EFAA17; stroke-width: 1.6; }
+
+    .arrowHead { fill: rgba(82, 82, 91, 0.72); }
+    .arrowHead.primary { fill: #4B3FE3; }
+    .arrowHead.warning { fill: #EFAA17; }
+
+    .labelBg { fill: #F7F7F8; stroke: rgba(23, 23, 23, 0.09); }
+    .labelBg.primary { fill: #F2F7FF; stroke: rgba(75, 63, 227, 0.42); }
+    .labelBg.warning { fill: #FEF5E7; stroke: rgba(239, 170, 23, 0.42); }
+    .labelText { fill: #171717; font: 500 12px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+    .labelText.primary { fill: #1A1759; }
+    .labelText.warning { fill: #EFAA17; }
+  </style>
+
+  <defs>
+    <marker id="stateArrowAuto" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="arrowHead" d="M1 1 L7 4 L1 7 Z" />
+    </marker>
+    <marker id="stateArrowPrimary" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="arrowHead primary" d="M1 1 L7 4 L1 7 Z" />
+    </marker>
+    <marker id="stateArrowWarning" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="arrowHead warning" d="M1 1 L7 4 L1 7 Z" />
+    </marker>
+  </defs>
+
+  <rect class="surface-muted" x="0" y="0" width="720" height="380" />
+
+  <rect class="stateNodeBg focus" x="130" y="80" width="130" height="50" rx="25" />
+  <text class="stateLabel focus" x="195" y="102" text-anchor="middle">ENABLED</text>
+  <text class="stateCaption" x="195" y="120" text-anchor="middle">启用 · code=1</text>
+
+  <rect class="stateNodeBg warning" x="460" y="80" width="130" height="50" rx="25" />
+  <text class="stateLabel warning" x="525" y="102" text-anchor="middle">LOCKED</text>
+  <text class="stateCaption" x="525" y="120" text-anchor="middle">锁定 · code=2</text>
+
+  <rect class="stateNodeBg muted" x="130" y="270" width="130" height="50" rx="25" />
+  <text class="stateLabel" x="195" y="292" text-anchor="middle">DISABLED</text>
+  <text class="stateCaption" x="195" y="310" text-anchor="middle">禁用 · code=0</text>
+
+  <rect class="stateNodeBg" x="460" y="270" width="130" height="50" rx="25" />
+  <text class="stateLabel" x="525" y="292" text-anchor="middle">PENDING</text>
+  <text class="stateCaption" x="525" y="310" text-anchor="middle">待审核 · code=3</text>
+
+  <path class="transitionPath primary" d="M260 96 H460" marker-end="url(#stateArrowPrimary)" />
+  <rect class="labelBg primary" x="328" y="84" width="64" height="20" rx="6" />
+  <text class="labelText primary" x="360" y="98" text-anchor="middle">异常锁定</text>
+
+  <path class="transitionPath primary" d="M460 114 H260" marker-end="url(#stateArrowPrimary)" />
+  <rect class="labelBg primary" x="328" y="118" width="48" height="20" rx="6" />
+  <text class="labelText primary" x="352" y="132" text-anchor="middle">解锁</text>
+
+  <path class="transitionPath" d="M175 130 V270" marker-end="url(#stateArrowAuto)" />
+  <rect class="labelBg" x="110" y="190" width="48" height="20" rx="6" />
+  <text class="labelText" x="134" y="204" text-anchor="middle">禁用</text>
+
+  <path class="transitionPath primary" d="M215 270 V130" marker-end="url(#stateArrowPrimary)" />
+  <rect class="labelBg primary" x="230" y="190" width="48" height="20" rx="6" />
+  <text class="labelText primary" x="254" y="204" text-anchor="middle">启用</text>
+
+  <path class="transitionPath warning" d="M460 295 H260" marker-end="url(#stateArrowWarning)" />
+  <rect class="labelBg warning" x="328" y="283" width="64" height="20" rx="6" />
+  <text class="labelText warning" x="360" y="297" text-anchor="middle">审核拒绝</text>
+
+  <path class="transitionPath primary" d="M470 270 Q400 200 260 130" marker-end="url(#stateArrowPrimary)" />
+  <rect class="labelBg primary" x="380" y="190" width="64" height="20" rx="6" />
+  <text class="labelText primary" x="412" y="204" text-anchor="middle">审核通过</text>
+
+  <path class="transitionPath" d="M520 130 Q580 200 540 270" marker-end="url(#stateArrowAuto)" />
+  <rect class="labelBg" x="565" y="190" width="60" height="20" rx="6" />
+  <text class="labelText" x="595" y="204" text-anchor="middle">审核中</text>
+</svg>

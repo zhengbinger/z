@@ -1,0 +1,149 @@
+2026-08-18 11:44:26.610 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2026-08-18 11:44:26.616 [main] INFO  org.dam.Application - Starting Application using Java 1.8.0_451 on zhengbing with PID 38812 (D:\Java\work_learn_space\z\target\classes started by mydre in D:\Java\work_learn_space\z)
+2026-08-18 11:44:26.617 [main] DEBUG org.dam.Application - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-08-18 11:44:26.617 [main] INFO  org.dam.Application - No active profile set, falling back to 1 default profile: "default"
+2026-08-18 11:44:28.179 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-08-18 11:44:28.186 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-08-18 11:44:28.188 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2026-08-18 11:44:28.189 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-08-18 11:44:28.333 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-08-18 11:44:28.333 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1667 ms
+2026-08-18 11:44:30.269 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-08-18 11:44:30.303 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-08-18 11:44:30.323 [main] INFO  org.dam.Application - Started Application in 4.214 seconds (JVM running for 4.626)
+2026-08-18 11:45:49.064 [http-nio-8080-exec-2] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-08-18 11:45:49.064 [http-nio-8080-exec-2] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-08-18 11:45:49.064 [http-nio-8080-exec-2] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-08-18 11:45:49.317 [http-nio-8080-exec-2] INFO  org.dam.service.impl.UserServiceImpl - 分页查询用户，current=1，size=10
+2026-08-18 11:45:49.566 [http-nio-8080-exec-2] INFO  com.zaxxer.hikari.HikariDataSource - DamHikariPool - Starting...
+2026-08-18 11:45:49.800 [http-nio-8080-exec-2] INFO  com.zaxxer.hikari.HikariDataSource - DamHikariPool - Start completed.
+2026-08-18 11:45:50.172 [http-nio-8080-exec-3] INFO  org.dam.service.impl.UserServiceImpl - 查询用户详情，id=1
+2026-08-18 11:45:50.232 [http-nio-8080-exec-1] INFO  org.dam.service.impl.UserServiceImpl - 新增用户，username=zhaoliu
+2026-08-18 11:46:07.576 [http-nio-8080-exec-8] INFO  org.dam.service.impl.UserServiceImpl - 修改用户，id=5，username=zhaoliu
+2026-08-18 11:46:07.612 [http-nio-8080-exec-6] INFO  org.dam.service.impl.UserServiceImpl - 查询用户详情，id=5
+2026-08-18 11:46:07.637 [http-nio-8080-exec-4] INFO  org.dam.service.impl.UserServiceImpl - 删除用户，id=5
+2026-08-18 11:46:07.664 [http-nio-8080-exec-5] INFO  org.dam.service.impl.UserServiceImpl - 查询用户详情，id=5
+2026-08-18 11:46:07.670 [http-nio-8080-exec-5] WARN  org.dam.common.exception.GlobalExceptionHandler - 业务异常，uri=/user/5，code=404，message=用户不存在
+2026-08-18 11:46:07.707 [http-nio-8080-exec-9] WARN  org.dam.common.exception.GlobalExceptionHandler - 参数校验失败，uri=/user，message=用户名不能为空
+2026-08-18 11:46:30.464 [http-nio-8080-exec-2] INFO  org.springdoc.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 258 ms
+2026-08-18 11:49:35.339 [http-nio-8080-exec-9] INFO  org.dam.service.impl.UserServiceImpl - 查询用户详情，id=1
+2026-08-18 11:49:35.484 [http-nio-8080-exec-3] ERROR org.dam.common.exception.GlobalExceptionHandler - 系统异常，uri=/user
+org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Unexpected character ('i' (code 105)): was expecting double-quote to start field name; nested exception is com.fasterxml.jackson.core.JsonParseException: Unexpected character ('i' (code 105)): was expecting double-quote to start field name
+ at [Source: (org.springframework.util.StreamUtils$NonClosingInputStream); line: 1, column: 3]
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.readJavaType(AbstractJackson2HttpMessageConverter.java:391)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.read(AbstractJackson2HttpMessageConverter.java:343)
+	at org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodArgumentResolver.readWithMessageConverters(AbstractMessageConverterMethodArgumentResolver.java:185)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor.readWithMessageConverters(RequestResponseBodyMethodProcessor.java:160)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor.resolveArgument(RequestResponseBodyMethodProcessor.java:133)
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:122)
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:179)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:146)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1072)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:965)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPut(FrameworkServlet.java:920)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:558)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:168)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:928)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1794)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:750)
+Caused by: com.fasterxml.jackson.core.JsonParseException: Unexpected character ('i' (code 105)): was expecting double-quote to start field name
+ at [Source: (org.springframework.util.StreamUtils$NonClosingInputStream); line: 1, column: 3]
+	at com.fasterxml.jackson.core.JsonParser._constructError(JsonParser.java:2391)
+	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportError(ParserMinimalBase.java:735)
+	at com.fasterxml.jackson.core.base.ParserMinimalBase._reportUnexpectedChar(ParserMinimalBase.java:659)
+	at com.fasterxml.jackson.core.json.UTF8StreamJsonParser._handleOddName(UTF8StreamJsonParser.java:2096)
+	at com.fasterxml.jackson.core.json.UTF8StreamJsonParser._parseName(UTF8StreamJsonParser.java:1746)
+	at com.fasterxml.jackson.core.json.UTF8StreamJsonParser.nextToken(UTF8StreamJsonParser.java:798)
+	at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:181)
+	at com.fasterxml.jackson.databind.deser.DefaultDeserializationContext.readRootValue(DefaultDeserializationContext.java:323)
+	at com.fasterxml.jackson.databind.ObjectMapper._readMapAndClose(ObjectMapper.java:4674)
+	at com.fasterxml.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:3682)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.readJavaType(AbstractJackson2HttpMessageConverter.java:380)
+	... 51 common frames omitted
+2026-08-18 11:49:35.648 [http-nio-8080-exec-2] INFO  org.dam.service.impl.UserServiceImpl - 查询用户详情，id=5
+2026-08-18 11:49:35.653 [http-nio-8080-exec-2] WARN  org.dam.common.exception.GlobalExceptionHandler - 业务异常，uri=/user/5，code=404，message=用户不存在
+2026-08-18 11:50:12.008 [http-nio-8080-exec-5] INFO  org.dam.service.impl.UserServiceImpl - 新增用户，username=test_cn
+2026-08-18 11:50:26.161 [http-nio-8080-exec-10] INFO  org.dam.service.impl.UserServiceImpl - 查询用户详情，id=6
+2026-08-18 11:50:26.289 [http-nio-8080-exec-8] INFO  org.dam.service.impl.UserServiceImpl - 修改用户，id=5，username=zhaoliu
+2026-08-18 11:50:26.382 [http-nio-8080-exec-7] INFO  org.dam.service.impl.UserServiceImpl - 查询用户详情，id=5
+2026-08-18 12:00:25.876 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2026-08-18 12:00:25.880 [main] INFO  org.dam.Application - Starting Application using Java 1.8.0_451 on zhengbing with PID 1872 (D:\Java\work_learn_space\z\target\classes started by mydre in D:\Java\work_learn_space\z)
+2026-08-18 12:00:25.880 [main] DEBUG org.dam.Application - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-08-18 12:00:25.880 [main] INFO  org.dam.Application - No active profile set, falling back to 1 default profile: "default"
+2026-08-18 12:00:27.316 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-08-18 12:00:27.321 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-08-18 12:00:27.322 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2026-08-18 12:00:27.322 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-08-18 12:00:27.462 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-08-18 12:00:27.462 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1533 ms
+2026-08-18 12:00:27.509 [main] INFO  org.dam.component.status.UserStatusChangePublisher - UserStatusChangePublisher 已注册观察者数量=4，清单如下：
+2026-08-18 12:00:27.509 [main] INFO  org.dam.component.status.UserStatusChangePublisher -   观察者=UserStatusDisabledHandler，关注状态=DISABLED
+2026-08-18 12:00:27.509 [main] INFO  org.dam.component.status.UserStatusChangePublisher -   观察者=UserStatusEnabledHandler，关注状态=ENABLED
+2026-08-18 12:00:27.509 [main] INFO  org.dam.component.status.UserStatusChangePublisher -   观察者=UserStatusLockedHandler，关注状态=LOCKED
+2026-08-18 12:00:27.509 [main] INFO  org.dam.component.status.UserStatusChangePublisher -   观察者=UserStatusPendingHandler，关注状态=PENDING
+2026-08-18 12:00:28.374 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-08-18 12:00:28.389 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2026-08-18 12:00:28.396 [main] INFO  org.dam.Application - Started Application in 2.919 seconds (JVM running for 3.273)
+2026-08-18 12:00:39.633 [http-nio-8080-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-08-18 12:00:39.633 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-08-18 12:00:39.635 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-08-18 12:00:39.664 [http-nio-8080-exec-1] INFO  org.dam.service.impl.UserServiceImpl - 查询用户详情，id=1
+2026-08-18 12:00:39.680 [http-nio-8080-exec-1] INFO  com.zaxxer.hikari.HikariDataSource - DamHikariPool - Starting...
+2026-08-18 12:00:39.830 [http-nio-8080-exec-1] INFO  com.zaxxer.hikari.HikariDataSource - DamHikariPool - Start completed.
+2026-08-18 12:00:40.146 [http-nio-8080-exec-2] INFO  org.dam.component.status.UserStatusChangePublisher - 发布用户状态变更事件，userId=1，username=admin，ENABLED->LOCKED
+2026-08-18 12:00:40.146 [http-nio-8080-exec-2] INFO  o.d.component.status.impl.UserStatusLockedHandler - [锁定观察者] 处理用户锁定事件，userId=1，username=admin，原状态=ENABLED
+2026-08-18 12:00:40.146 [http-nio-8080-exec-2] WARN  o.d.component.status.impl.UserStatusLockedHandler - [锁定观察者] 已触发风险告警，userId=1，changeTime=2026-08-18T12:00:40.146
+2026-08-18 12:00:40.146 [http-nio-8080-exec-2] INFO  o.d.component.status.impl.UserStatusLockedHandler - [锁定观察者] 记录锁定原因，userId=1，fromStatus=ENABLED
+2026-08-18 12:00:40.147 [http-nio-8080-exec-2] INFO  o.d.component.status.impl.UserStatusLockedHandler - [锁定观察者] 已暂停用户关联的定时任务，userId=1
+2026-08-18 12:00:40.259 [http-nio-8080-exec-4] INFO  org.dam.component.status.UserStatusChangePublisher - 发布用户状态变更事件，userId=1，username=admin，LOCKED->DISABLED
+2026-08-18 12:00:40.259 [http-nio-8080-exec-4] INFO  o.d.c.status.impl.UserStatusDisabledHandler - [禁用观察者] 处理用户禁用事件，userId=1，username=admin，原状态=LOCKED
+2026-08-18 12:00:40.260 [http-nio-8080-exec-4] INFO  o.d.c.status.impl.UserStatusDisabledHandler - [禁用观察者] 强制下线，销毁 Token，userId=1，username=admin
+2026-08-18 12:00:40.260 [http-nio-8080-exec-4] INFO  o.d.c.status.impl.UserStatusDisabledHandler - [禁用观察者] 记录禁用审计日志，userId=1，changeTime=2026-08-18T12:00:40.259
+2026-08-18 12:00:40.260 [http-nio-8080-exec-4] INFO  o.d.c.status.impl.UserStatusDisabledHandler - [禁用观察者] 已通知关联人，userId=1
+2026-08-18 12:00:40.348 [http-nio-8080-exec-10] INFO  org.dam.component.status.UserStatusChangePublisher - 发布用户状态变更事件，userId=1，username=admin，DISABLED->PENDING
+2026-08-18 12:00:40.348 [http-nio-8080-exec-10] INFO  o.d.component.status.impl.UserStatusPendingHandler - [待审核观察者] 处理用户进入待审核事件，userId=1，username=admin，原状态=DISABLED
+2026-08-18 12:00:40.348 [http-nio-8080-exec-10] INFO  o.d.component.status.impl.UserStatusPendingHandler - [待审核观察者] 已向审核员发送待审邮件，userId=1，submitTime=2026-08-18T12:00:40.348
+2026-08-18 12:00:40.348 [http-nio-8080-exec-10] INFO  o.d.component.status.impl.UserStatusPendingHandler - [待审核观察者] 已生成审核任务，userId=1
+2026-08-18 12:00:40.348 [http-nio-8080-exec-10] INFO  o.d.component.status.impl.UserStatusPendingHandler - [待审核观察者] 已记录提交审核时间，userId=1，changeTime=2026-08-18T12:00:40.348
+2026-08-18 12:00:40.461 [http-nio-8080-exec-7] INFO  org.dam.component.status.UserStatusChangePublisher - 发布用户状态变更事件，userId=1，username=admin，PENDING->ENABLED
+2026-08-18 12:00:40.461 [http-nio-8080-exec-7] INFO  o.d.component.status.impl.UserStatusEnabledHandler - [启用观察者] 处理用户启用事件，userId=1，username=admin，原状态=PENDING
+2026-08-18 12:00:40.461 [http-nio-8080-exec-7] INFO  o.d.component.status.impl.UserStatusEnabledHandler - [启用观察者] 清空用户登录失败次数，userId=1
+2026-08-18 12:00:40.461 [http-nio-8080-exec-7] INFO  o.d.component.status.impl.UserStatusEnabledHandler - [启用观察者] 重置风控标记，userId=1
+2026-08-18 12:00:40.461 [http-nio-8080-exec-7] INFO  o.d.component.status.impl.UserStatusEnabledHandler - [启用观察者] 已发送启用通知邮件，userId=1，username=admin
+2026-08-18 12:00:40.541 [http-nio-8080-exec-9] INFO  org.dam.service.impl.UserServiceImpl - 用户状态未变化，跳过发布事件，id=1，status=ENABLED

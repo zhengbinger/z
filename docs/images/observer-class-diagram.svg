@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 580" width="100%" height="auto" role="img" aria-label="Observer pattern class diagram">
+  <style>
+    .surface { fill: #F7F7F8; }
+    .surface-muted { fill: #EFEFF2; }
+    .text { fill: #171717; }
+    .text-muted { fill: #52525B; }
+    .border { stroke: rgba(23, 23, 23, 0.12); }
+    .brand { stroke: #4B3FE3; }
+    .brand-soft { fill: #F2F7FF; }
+    .brand-text { fill: #1A1759; }
+    .accent { stroke: #27D2BF; }
+    .accent-text { fill: #0F766E; }
+
+    .moduleRect { fill: #F7F7F8; stroke: rgba(23, 23, 23, 0.11); stroke-width: 1; }
+    .moduleRect.focus { fill: #F2F7FF; stroke: #4B3FE3; stroke-width: 1.4; }
+    .moduleRect.enum { fill: #EAFBF8; stroke: #27D2BF; stroke-width: 1.2; }
+    .moduleRect.boundary { fill: rgba(247, 247, 248, 0.7); stroke: rgba(82, 82, 91, 0.32); stroke-width: 1; stroke-dasharray: 6 5; }
+
+    .moduleTitle { fill: #171717; font: 500 14px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+    .moduleTitle.focus { fill: #1A1759; }
+    .moduleTitle.enum { fill: #0F766E; }
+    .moduleCaption { fill: #52525B; font: 400 12px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+    .moduleCaption.focus { fill: #4B3FE3; }
+    .moduleCaption.enum { fill: #0F766E; }
+
+    .connectorPath { fill: none; stroke: rgba(82, 82, 91, 0.6); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .connectorPath.primary { stroke: #4B3FE3; stroke-width: 1.7; stroke-dasharray: 7 6; }
+    .connectorPath.implements { stroke-dasharray: 4 5; opacity: 0.78; }
+
+    .arrowHead { fill: rgba(82, 82, 91, 0.72); }
+    .arrowHead.primary { fill: #4B3FE3; }
+
+    .labelBg { fill: #F7F7F8; stroke: rgba(23, 23, 23, 0.09); }
+    .labelBg.primary { fill: #F2F7FF; stroke: rgba(75, 63, 227, 0.42); }
+    .labelText { fill: #171717; font: 500 12px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+    .labelText.primary { fill: #1A1759; }
+  </style>
+
+  <defs>
+    <marker id="archiArrowAuto" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="arrowHead" d="M1 1 L7 4 L1 7 Z" />
+    </marker>
+    <marker id="archiArrowPrimary" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="arrowHead primary" d="M1 1 L7 4 L1 7 Z" />
+    </marker>
+  </defs>
+
+  <rect class="surface-muted" x="0" y="0" width="720" height="580" />
+
+  <rect class="moduleRect boundary" x="40" y="36" width="640" height="372" rx="14" />
+  <text class="moduleCaption" x="56" y="56">核心组件 · org.dam.component.status</text>
+
+  <rect class="moduleRect boundary" x="40" y="424" width="640" height="124" rx="14" />
+  <text class="moduleCaption" x="56" y="444">观察者实现 · org.dam.component.status.impl</text>
+
+  <rect class="moduleRect" x="290" y="72" width="140" height="46" rx="8" />
+  <text class="moduleTitle" x="360" y="92" text-anchor="middle">UserController</text>
+  <text class="moduleCaption" x="360" y="108" text-anchor="middle">HTTP 入口</text>
+
+  <rect class="moduleRect" x="280" y="148" width="160" height="46" rx="8" />
+  <text class="moduleTitle" x="360" y="168" text-anchor="middle">UserServiceImpl</text>
+  <text class="moduleCaption" x="360" y="184" text-anchor="middle">调用方 / 业务层</text>
+
+  <rect class="moduleRect focus" x="40" y="228" width="320" height="74" rx="10" />
+  <text class="moduleTitle focus" x="200" y="252" text-anchor="middle">UserStatusChangePublisher</text>
+  <text class="moduleCaption focus" x="200" y="272" text-anchor="middle">主题 / 被观察者</text>
+  <text class="moduleCaption focus" x="200" y="290" text-anchor="middle">持有 List&lt;Observer&gt; · 按 toStatus 路由</text>
+
+  <rect class="moduleRect" x="400" y="232" width="280" height="32" rx="8" />
+  <text class="moduleTitle" x="540" y="252" text-anchor="middle">UserStatusChangeEvent</text>
+
+  <rect class="moduleRect enum" x="400" y="270" width="280" height="32" rx="8" />
+  <text class="moduleTitle enum" x="540" y="290" text-anchor="middle">UserStatus (enum)</text>
+
+  <rect class="moduleRect" x="40" y="338" width="320" height="46" rx="8" />
+  <text class="moduleTitle" x="200" y="358" text-anchor="middle">UserStatusChangeObserver</text>
+  <text class="moduleCaption" x="200" y="374" text-anchor="middle">interface · targetStatus() + onStatusChange()</text>
+
+  <path class="connectorPath" d="M360 118 V144" marker-end="url(#archiArrowAuto)" />
+  <path class="connectorPath primary" d="M360 194 V222" marker-end="url(#archiArrowPrimary)" />
+  <rect class="labelBg primary" x="372" y="200" width="56" height="20" rx="6" />
+  <text class="labelText primary" x="400" y="214" text-anchor="middle">publish()</text>
+
+  <path class="connectorPath" d="M364 250 H396" marker-end="url(#archiArrowAuto)" />
+  <rect class="labelBg" x="332" y="226" width="60" height="20" rx="6" />
+  <text class="labelText" x="362" y="240" text-anchor="middle">creates</text>
+
+  <path class="connectorPath" d="M200 302 V334" marker-end="url(#archiArrowAuto)" />
+  <rect class="labelBg" x="214" y="306" width="60" height="20" rx="6" />
+  <text class="labelText" x="244" y="320" text-anchor="middle">holds</text>
+
+  <path class="connectorPath implements" d="M200 384 V422" marker-end="url(#archiArrowAuto)" />
+  <rect class="labelBg" x="214" y="394" width="80" height="20" rx="6" />
+  <text class="labelText" x="254" y="408" text-anchor="middle">implements</text>
+
+  <rect class="moduleRect" x="56" y="460" width="140" height="70" rx="8" />
+  <text class="moduleTitle" x="126" y="484" text-anchor="middle">EnabledHandler</text>
+  <text class="moduleCaption" x="126" y="500" text-anchor="middle">targetStatus=</text>
+  <text class="moduleCaption" x="126" y="516" text-anchor="middle">ENABLED</text>
+
+  <rect class="moduleRect" x="212" y="460" width="140" height="70" rx="8" />
+  <text class="moduleTitle" x="282" y="484" text-anchor="middle">DisabledHandler</text>
+  <text class="moduleCaption" x="282" y="500" text-anchor="middle">targetStatus=</text>
+  <text class="moduleCaption" x="282" y="516" text-anchor="middle">DISABLED</text>
+
+  <rect class="moduleRect" x="368" y="460" width="140" height="70" rx="8" />
+  <text class="moduleTitle" x="438" y="484" text-anchor="middle">LockedHandler</text>
+  <text class="moduleCaption" x="438" y="500" text-anchor="middle">targetStatus=</text>
+  <text class="moduleCaption" x="438" y="516" text-anchor="middle">LOCKED</text>
+
+  <rect class="moduleRect" x="524" y="460" width="140" height="70" rx="8" />
+  <text class="moduleTitle" x="594" y="484" text-anchor="middle">PendingHandler</text>
+  <text class="moduleCaption" x="594" y="500" text-anchor="middle">targetStatus=</text>
+  <text class="moduleCaption" x="594" y="516" text-anchor="middle">PENDING</text>
+</svg>
