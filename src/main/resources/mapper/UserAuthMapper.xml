@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dam.mapper.UserAuthMapper">
+
+    <resultMap id="userAuthResultMap" type="org.dam.entity.UserAuth">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="authType" column="auth_type"/>
+        <result property="identifier" column="identifier"/>
+        <result property="credential" column="credential"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="deleted" column="deleted"/>
+    </resultMap>
+
+    <select id="selectByAuthTypeAndIdentifier" resultMap="userAuthResultMap">
+        SELECT *
+        FROM sys_user_auth
+        WHERE auth_type = #{authType}
+          AND identifier = #{identifier}
+          AND status = 1
+          AND deleted = 0
+        LIMIT 1
+    </select>
+
+</mapper>

@@ -30,6 +30,19 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: Asia/Shanghai
     default-property-inclusion: non_null
+  # Redis 配置
+  redis:
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+    database: ${REDIS_DB:0}
+    timeout: 3000ms
+    lettuce:
+      pool:
+        max-active: 16
+        max-idle: 8
+        min-idle: 2
+        max-wait: 2000ms
 
 # MyBatis Plus 配置
 mybatis-plus:
@@ -67,6 +80,13 @@ springdoc:
     - group: default
       paths-to-match: /**
       packages-to-scan: org.dam.controller
+
+# JWT 认证配置
+jwt:
+  secret: dam-rbac-jwt-secret-key-2026-change-me-in-production-environment
+  issuer: dam-rbac
+  access-token-expire-minutes: 120
+  refresh-token-expire-days: 7
 
 # 日志配置
 logging:

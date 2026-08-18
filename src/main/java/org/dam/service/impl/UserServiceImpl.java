@@ -25,6 +25,7 @@ import org.dam.service.UserService;
 import org.dam.vo.UserRoleVO;
 import org.dam.vo.UserVO;
 import org.dam.vo.RoleVO;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -160,6 +161,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = {"rbac:roles", "rbac:perms"}, key = "#id")
     public Boolean removeUser(Long id) {
         log.info("删除用户，id={}", id);
         User user = userMapper.selectById(id);
@@ -217,6 +219,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = {"rbac:roles", "rbac:perms"}, key = "#assignDTO.userId")
     public Boolean assignRoles(UserRoleAssignDTO assignDTO) {
         Long userId = assignDTO.getUserId();
         List<Long> roleIds = assignDTO.getRoleIds();

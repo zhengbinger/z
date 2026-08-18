@@ -22,6 +22,7 @@ import org.dam.service.RoleService;
 import org.dam.vo.PermissionVO;
 import org.dam.vo.RolePermissionVO;
 import org.dam.vo.RoleVO;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -96,6 +97,7 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = {"rbac:roles", "rbac:perms"}, allEntries = true)
     public Long saveRole(RoleSaveDTO saveDTO) {
         log.info("新增角色，roleCode={}，roleName={}", saveDTO.getRoleCode(), saveDTO.getRoleName());
         checkRoleCodeUnique(saveDTO.getRoleCode(), null);
@@ -116,6 +118,7 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = {"rbac:roles", "rbac:perms"}, allEntries = true)
     public Boolean updateRole(RoleSaveDTO saveDTO) {
         if (Objects.isNull(saveDTO.getId())) {
             throw new BizException(ResultCode.PARAM_VALIDATE_FAILED, "角色 ID 不能为空");
@@ -145,6 +148,7 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = {"rbac:roles", "rbac:perms"}, allEntries = true)
     public Boolean removeRole(Long id) {
         log.info("删除角色，id={}", id);
         Role role = roleMapper.selectById(id);
@@ -175,6 +179,7 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = {"rbac:roles", "rbac:perms"}, allEntries = true)
     public Boolean assignPermissions(RolePermissionAssignDTO assignDTO) {
         Long roleId = assignDTO.getRoleId();
         List<Long> permissionIds = assignDTO.getPermissionIds();

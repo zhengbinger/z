@@ -16,6 +16,7 @@ import org.dam.mapper.PermissionMapper;
 import org.dam.mapper.RolePermissionMapper;
 import org.dam.service.PermissionService;
 import org.dam.vo.PermissionVO;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -88,6 +89,7 @@ public class PermissionServiceImpl implements PermissionService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = "rbac:perms", allEntries = true)
     public Long savePermission(PermissionSaveDTO saveDTO) {
         log.info("新增权限，permissionCode={}，permissionName={}", saveDTO.getPermissionCode(), saveDTO.getPermissionName());
         checkPermissionCodeUnique(saveDTO.getPermissionCode(), null);
@@ -113,6 +115,7 @@ public class PermissionServiceImpl implements PermissionService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = "rbac:perms", allEntries = true)
     public Boolean updatePermission(PermissionSaveDTO saveDTO) {
         if (Objects.isNull(saveDTO.getId())) {
             throw new BizException(ResultCode.PARAM_VALIDATE_FAILED, "权限 ID 不能为空");
@@ -137,6 +140,7 @@ public class PermissionServiceImpl implements PermissionService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = "rbac:perms", allEntries = true)
     public Boolean removePermission(Long id) {
         log.info("删除权限，id={}", id);
         Permission permission = permissionMapper.selectById(id);
