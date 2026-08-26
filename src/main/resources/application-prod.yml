@@ -1,0 +1,64 @@
+# =====================================================================
+# 生产环境配置（线上正式运行使用）
+# 重要红线：
+#   1. 严禁在此文件中写任何明文密码、密钥、生产数据库账号！
+#   2. 所有敏感信息必须通过环境变量（DB_PASSWORD / REDIS_PASSWORD / JWT_SECRET）注入
+#   3. Knife4j 文档已关闭，禁止生产暴露接口定义
+#   4. MyBatis SQL 打印已关闭，禁止生产泄露 SQL 与数据到日志
+#   5. DEBUG 级日志已全局关闭，logback-spring.xml 中按天滚动保留 30 天
+# =====================================================================
+
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: ${TOMCAT_MAX_THREADS:400}
+    accept-count: ${TOMCAT_ACCEPT_COUNT:200}
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT:3306}/${DB_NAME}?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      minimum-idle: ${HIKARI_MIN_IDLE:10}
+      maximum-pool-size: ${HIKARI_MAX_POOL:50}
+      idle-timeout: 60000
+      max-lifetime: 1800000
+      connection-timeout: 10000
+      pool-name: DamHikariPoolProd
+
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD}
+    database: ${REDIS_DB:0}
+    timeout: 3000ms
+    lettuce:
+      pool:
+        max-active: ${LETTUCE_MAX_ACTIVE:32}
+        max-idle: ${LETTUCE_MAX_IDLE:16}
+        min-idle: ${LETTUCE_MIN_IDLE:4}
+        max-wait: 3000ms
+
+# ========== JWT 密钥：生产必须通过 JWT_SECRET 环境变量注入（公共配置的默认值会被本环境覆盖为空，强制不使用弱密钥） ==========
+jwt:
+  secret: ${JWT_SECRET:}
+
+# ========== 生产强制关闭 Knife4j / SpringDoc 对外暴露 ==========
+knife4j:
+  enable: false
+springdoc:
+  api-docs:
+    enabled: false
+
+# ========== 生产日志：INFO 全局、业务包 INFO、严禁 DEBUG ==========
+logging:
+  level:
+    root: INFO
+    org.dam: INFO
+    org.springframework.web: WARN
+    com.baomidou.mybatisplus: ERROR

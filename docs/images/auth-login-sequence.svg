@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 540" width="100%" height="auto" role="img" aria-label="登录流程时序图">
+  <style>
+    .surface-muted { fill: #EFEFF2; }
+    .text { fill: #171717; }
+    .text-muted { fill: #52525B; }
+
+    .participantBox { fill: #F7F7F8; stroke: rgba(23, 23, 23, 0.11); stroke-width: 1; }
+    .participantBox.focus { fill: #F2F7FF; stroke: #4B3FE3; }
+    .participantBox.external { stroke: rgba(82, 82, 91, 0.42); }
+    .participantLabel { fill: #171717; font: 500 12px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+    .participantLabel.focus { fill: #1A1759; }
+    .participantCaption { fill: #52525B; font: 400 12px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+
+    .lifeline { fill: none; stroke: rgba(82, 82, 91, 0.42); stroke-width: 1.2; stroke-dasharray: 5 7; stroke-linecap: round; }
+    .activation { fill: #F7F7F8; stroke: rgba(23, 23, 23, 0.11); stroke-width: 1; }
+    .activation.focus { fill: #F2F7FF; stroke: #4B3FE3; }
+
+    .messagePath { fill: none; stroke: #52525B; stroke-width: 1.5; }
+    .messagePath.return { stroke-dasharray: 7 6; }
+    .messagePath.focus { stroke: #4B3FE3; stroke-width: 1.8; }
+
+    .arrowHead { fill: #52525B; }
+    .arrowHead.focus { fill: #4B3FE3; }
+
+    .labelBg { fill: #F7F7F8; stroke: rgba(23, 23, 23, 0.09); }
+    .labelBg.focus { fill: #F2F7FF; stroke: rgba(75, 63, 227, 0.42); }
+    .messageLabel { fill: #171717; font: 500 12px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+    .messageLabel.focus { fill: #1A1759; }
+
+    .phaseChip { fill: rgba(247, 247, 248, 0.56); stroke: rgba(23, 23, 23, 0.08); }
+    .phaseText { fill: #52525B; font: 500 12px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+  </style>
+
+  <defs>
+    <marker id="seqArrowAuto" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="arrowHead" d="M1 1 L7 4 L1 7 Z" />
+    </marker>
+    <marker id="seqArrowFocus" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="arrowHead focus" d="M1 1 L7 4 L1 7 Z" />
+    </marker>
+  </defs>
+
+  <rect class="surface-muted" x="0" y="0" width="820" height="540" />
+
+  <rect class="phaseChip" x="40" y="20" width="170" height="26" rx="13" />
+  <text class="phaseText" x="125" y="38" text-anchor="middle">阶段1 · 校验密码</text>
+  <rect class="phaseChip" x="500" y="20" width="200" height="26" rx="13" />
+  <text class="phaseText" x="600" y="38" text-anchor="middle">阶段2 · 生成双 Token</text>
+
+  <g transform="translate(20 60)">
+    <rect class="participantBox external" width="110" height="50" rx="8" />
+    <text class="participantLabel" x="55" y="22" text-anchor="middle">前端</text>
+    <text class="participantCaption" x="55" y="40" text-anchor="middle">浏览器 / App</text>
+  </g>
+  <g transform="translate(155 60)">
+    <rect class="participantBox" width="110" height="50" rx="8" />
+    <text class="participantLabel" x="55" y="22" text-anchor="middle">AuthController</text>
+    <text class="participantCaption" x="55" y="40" text-anchor="middle">REST 入口</text>
+  </g>
+  <g transform="translate(290 60)">
+    <rect class="participantBox" width="120" height="50" rx="8" />
+    <text class="participantLabel" x="60" y="22" text-anchor="middle">AuthServiceImpl</text>
+    <text class="participantCaption" x="60" y="40" text-anchor="middle">业务事务</text>
+  </g>
+  <g transform="translate(435 60)">
+    <rect class="participantBox" width="120" height="50" rx="8" />
+    <text class="participantLabel" x="60" y="22" text-anchor="middle">UserAuthMapper</text>
+    <text class="participantCaption" x="60" y="40" text-anchor="middle">认证 + 用户查询</text>
+  </g>
+  <g transform="translate(580 60)">
+    <rect class="participantBox" width="110" height="50" rx="8" />
+    <text class="participantLabel" x="55" y="22" text-anchor="middle">JwtTokenUtil</text>
+    <text class="participantCaption" x="55" y="40" text-anchor="middle">Token 签发</text>
+  </g>
+  <g transform="translate(715 60)">
+    <rect class="participantBox" width="90" height="50" rx="8" />
+    <text class="participantLabel" x="45" y="22" text-anchor="middle">RefreshTokenService</text>
+    <text class="participantCaption" x="45" y="40" text-anchor="middle">Redis 存储</text>
+  </g>
+
+  <path class="lifeline" d="M75 110 V510" />
+  <path class="lifeline" d="M210 110 V510" />
+  <path class="lifeline" d="M350 110 V510" />
+  <path class="lifeline" d="M495 110 V510" />
+  <path class="lifeline" d="M635 110 V510" />
+  <path class="lifeline" d="M760 110 V510" />
+
+  <rect class="activation" x="202" y="160" width="16" height="335" rx="5" />
+  <rect class="activation" x="342" y="200" width="16" height="255" rx="5" />
+  <rect class="activation" x="487" y="240" width="16" height="55" rx="5" />
+  <rect class="activation" x="627" y="320" width="16" height="40" rx="5" />
+  <rect class="activation" x="752" y="360" width="16" height="55" rx="5" />
+
+  <path class="messagePath focus" d="M85 165 H202" marker-end="url(#seqArrowFocus)" />
+  <rect class="labelBg focus" x="88" y="153" width="110" height="22" rx="6" />
+  <text class="messageLabel focus" x="143" y="169" text-anchor="middle">POST /auth/login</text>
+
+  <path class="messagePath" d="M218 205 H342" marker-end="url(#seqArrowAuto)" />
+  <rect class="labelBg" x="228" y="193" width="105" height="22" rx="6" />
+  <text class="messageLabel" x="280" y="209" text-anchor="middle">login(loginDTO)</text>
+
+  <path class="messagePath" d="M358 245 H487" marker-end="url(#seqArrowAuto)" />
+  <rect class="labelBg" x="370" y="233" width="105" height="22" rx="6" />
+  <text class="messageLabel" x="422" y="249" text-anchor="middle">查询认证记录</text>
+
+  <path class="messagePath return" d="M487 285 H358" marker-end="url(#seqArrowAuto)" />
+  <rect class="labelBg" x="362" y="273" width="120" height="22" rx="6" />
+  <text class="messageLabel" x="422" y="289" text-anchor="middle">UserAuth (BCrypt)</text>
+
+  <path class="messagePath focus" d="M358 325 H627" marker-end="url(#seqArrowFocus)" />
+  <rect class="labelBg focus" x="395" y="313" width="195" height="22" rx="6" />
+  <text class="messageLabel focus" x="492" y="329" text-anchor="middle">generateAccess + RefreshToken</text>
+
+  <path class="messagePath" d="M358 365 H752" marker-end="url(#seqArrowAuto)" />
+  <rect class="labelBg" x="465" y="353" width="180" height="22" rx="6" />
+  <text class="messageLabel" x="555" y="369" text-anchor="middle">save(userId, refreshToken)</text>
+
+  <path class="messagePath return" d="M752 405 H358" marker-end="url(#seqArrowAuto)" />
+  <rect class="labelBg" x="485" y="393" width="140" height="22" rx="6" />
+  <text class="messageLabel" x="555" y="409" text-anchor="middle">Redis SETEX TTL=7d</text>
+
+  <path class="messagePath return" d="M342 445 H218" marker-end="url(#seqArrowAuto)" />
+  <rect class="labelBg" x="250" y="433" width="60" height="22" rx="6" />
+  <text class="messageLabel" x="280" y="449" text-anchor="middle">TokenVO</text>
+
+  <path class="messagePath return" d="M202 485 H85" marker-end="url(#seqArrowAuto)" />
+  <rect class="labelBg" x="91" y="473" width="110" height="22" rx="6" />
+  <text class="messageLabel" x="146" y="489" text-anchor="middle">Result&lt;TokenVO&gt;</text>
+</svg>

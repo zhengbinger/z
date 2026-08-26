@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 880" width="100%" height="auto" role="img" aria-label="RBAC 权限拦截链路流程图">
+  <style>
+    .surface-muted { fill: #EFEFF2; }
+    .surface { fill: #F7F7F8; }
+    .text { fill: #171717; }
+    .text-muted { fill: #52525B; }
+
+    .moduleRect { fill: #F7F7F8; stroke: rgba(23, 23, 23, 0.11); stroke-width: 1; }
+    .moduleRect.focus { fill: #F2F7FF; stroke: #4B3FE3; stroke-width: 1.4; }
+    .moduleRect.accent { fill: #EAFBF8; stroke: #27D2BF; stroke-width: 1.2; }
+    .moduleRect.danger { fill: #FEF2F2; stroke: #DC2626; stroke-width: 1.2; }
+
+    .moduleTitle { fill: #171717; font: 500 13px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+    .moduleTitle.focus { fill: #1A1759; }
+    .moduleTitle.accent { fill: #0F766E; }
+    .moduleTitle.danger { fill: #991B1B; }
+    .moduleCaption { fill: #52525B; font: 400 11px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+    .moduleCaption.focus { fill: #4B3FE3; }
+    .moduleCaption.accent { fill: #0F766E; }
+    .moduleCaption.danger { fill: #991B1B; }
+
+    .messagePath { fill: none; stroke: #52525B; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .messagePath.focus { stroke: #4B3FE3; stroke-width: 1.7; }
+    .messagePath.danger { stroke: #DC2626; stroke-width: 1.6; stroke-dasharray: 6 5; }
+    .messagePath.return { stroke-dasharray: 5 7; opacity: 0.78; }
+
+    .arrowHead { fill: #52525B; }
+    .arrowHead.focus { fill: #4B3FE3; }
+    .arrowHead.danger { fill: #DC2626; }
+
+    .labelBg { fill: #F7F7F8; stroke: rgba(23, 23, 23, 0.09); }
+    .labelBg.focus { fill: #F2F7FF; stroke: rgba(75, 63, 227, 0.42); }
+    .labelBg.danger { fill: #FEF2F2; stroke: rgba(220, 38, 38, 0.42); }
+    .messageLabel { fill: #171717; font: 500 11px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+    .messageLabel.focus { fill: #1A1759; }
+    .messageLabel.danger { fill: #991B1B; }
+
+    .phaseChip { fill: rgba(247, 247, 248, 0.56); stroke: rgba(23, 23, 23, 0.08); }
+    .phaseText { fill: #52525B; font: 500 12px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+  </style>
+
+  <defs>
+    <marker id="flowArrowAuto" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="arrowHead" d="M1 1 L7 4 L1 7 Z" />
+    </marker>
+    <marker id="flowArrowFocus" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="arrowHead focus" d="M1 1 L7 4 L1 7 Z" />
+    </marker>
+    <marker id="flowArrowDanger" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="arrowHead danger" d="M1 1 L7 4 L1 7 Z" />
+    </marker>
+  </defs>
+
+  <rect class="surface-muted" x="0" y="0" width="780" height="880" />
+
+  <rect class="phaseChip" x="32" y="22" width="180" height="26" rx="13" />
+  <text class="phaseText" x="122" y="40" text-anchor="middle">阶段一 · 请求入口</text>
+
+  <rect class="moduleRect" x="240" y="60" width="300" height="44" rx="8" />
+  <text class="moduleTitle" x="390" y="82" text-anchor="middle">HTTP 请求</text>
+  <text class="moduleCaption" x="390" y="96" text-anchor="middle">浏览器 / 调用方发起</text>
+  <path class="messagePath" d="M390 104 V124" marker-end="url(#flowArrowAuto)" />
+
+  <rect class="moduleRect" x="240" y="124" width="300" height="44" rx="8" />
+  <text class="moduleTitle" x="390" y="146" text-anchor="middle">登录拦截器（解析 Token）</text>
+  <text class="moduleCaption" x="390" y="160" text-anchor="middle">preHandle</text>
+  <path class="messagePath return" d="M540 146 H600" marker-end="url(#flowArrowAuto)" />
+  <rect class="labelBg" x="600" y="134" width="148" height="24" rx="6" />
+  <text class="messageLabel" x="674" y="150" text-anchor="middle">set SecurityContextHolder</text>
+  <path class="messagePath" d="M390 168 V188" marker-end="url(#flowArrowAuto)" />
+
+  <rect class="moduleRect" x="240" y="188" width="300" height="44" rx="8" />
+  <text class="moduleTitle" x="390" y="210" text-anchor="middle">Controller 方法</text>
+  <text class="moduleCaption" x="390" y="224" text-anchor="middle">标注 @RequiresPermission</text>
+  <path class="messagePath" d="M390 232 V252" marker-end="url(#flowArrowAuto)" />
+
+  <rect class="moduleRect focus" x="240" y="252" width="300" height="44" rx="8" />
+  <text class="moduleTitle focus" x="390" y="274" text-anchor="middle">RbacAspect @Before 通知</text>
+  <text class="moduleCaption focus" x="390" y="288" text-anchor="middle">AOP 切面拦截</text>
+  <path class="messagePath focus" d="M390 296 V324" marker-end="url(#flowArrowFocus)" />
+
+  <rect class="phaseChip" x="32" y="298" width="200" height="26" rx="13" />
+  <text class="phaseText" x="132" y="316" text-anchor="middle">阶段二 · 拆解 4 个子步骤</text>
+
+  <rect class="moduleRect" x="180" y="324" width="360" height="40" rx="8" />
+  <text class="moduleTitle" x="360" y="343" text-anchor="middle">1. checkLogin</text>
+  <text class="moduleCaption" x="360" y="357" text-anchor="middle">isLoggedIn()==false → 401</text>
+  <path class="messagePath danger" d="M540 344 H620" marker-end="url(#flowArrowDanger)" />
+  <rect class="moduleRect danger" x="620" y="328" width="128" height="32" rx="8" />
+  <text class="moduleTitle danger" x="684" y="348" text-anchor="middle">401 Unauthorized</text>
+  <path class="messagePath" d="M360 364 V388" marker-end="url(#flowArrowAuto)" />
+
+  <rect class="moduleRect" x="180" y="388" width="360" height="40" rx="8" />
+  <text class="moduleTitle" x="360" y="407" text-anchor="middle">2. resolveAnnotation</text>
+  <text class="moduleCaption" x="360" y="421" text-anchor="middle">方法注解优先，回退类注解</text>
+  <path class="messagePath" d="M360 428 V452" marker-end="url(#flowArrowAuto)" />
+
+  <rect class="moduleRect" x="180" y="452" width="360" height="40" rx="8" />
+  <text class="moduleTitle" x="360" y="471" text-anchor="middle">3. SecurityContextHolder.getCurrentUserId()</text>
+  <text class="moduleCaption" x="360" y="485" text-anchor="middle">从 ThreadLocal 取 userId</text>
+  <path class="messagePath" d="M360 492 V516" marker-end="url(#flowArrowAuto)" />
+
+  <rect class="moduleRect" x="180" y="516" width="360" height="40" rx="8" />
+  <text class="moduleTitle" x="360" y="535" text-anchor="middle">4. AccessControlService.hasPermission</text>
+  <text class="moduleCaption" x="360" y="549" text-anchor="middle">/ hasAnyPermission</text>
+  <path class="messagePath" d="M360 556 V580" marker-end="url(#flowArrowAuto)" />
+
+  <rect class="moduleRect focus" x="180" y="580" width="360" height="40" rx="8" />
+  <text class="moduleTitle focus" x="360" y="599" text-anchor="middle">@Cacheable("rbac:perms", key=#userId)</text>
+  <text class="moduleCaption focus" x="360" y="613" text-anchor="middle">缓存命中直接返回结果</text>
+  <path class="messagePath" d="M360 620 V644" marker-end="url(#flowArrowAuto)" />
+  <rect class="labelBg" x="372" y="622" width="80" height="20" rx="6" />
+  <text class="messageLabel" x="412" y="636" text-anchor="middle">缓存未命中</text>
+
+  <rect class="moduleRect accent" x="180" y="644" width="360" height="40" rx="8" />
+  <text class="moduleTitle accent" x="360" y="663" text-anchor="middle">PermissionMapper.selectPermissionsByUserId</text>
+  <text class="moduleCaption accent" x="360" y="677" text-anchor="middle">三表 JOIN + DISTINCT</text>
+  <path class="messagePath" d="M360 684 V708" marker-end="url(#flowArrowAuto)" />
+
+  <rect class="moduleRect" x="180" y="708" width="360" height="40" rx="20" />
+  <text class="moduleTitle" x="360" y="727" text-anchor="middle">命中? true / 未命中? false</text>
+  <text class="moduleCaption" x="360" y="741" text-anchor="middle">权限编码是否在用户权限集合中</text>
+  <path class="messagePath danger" d="M540 728 H620" marker-end="url(#flowArrowDanger)" />
+  <rect class="labelBg danger" x="546" y="716" width="58" height="22" rx="6" />
+  <text class="messageLabel danger" x="575" y="731" text-anchor="middle">false</text>
+  <rect class="moduleRect danger" x="620" y="712" width="128" height="32" rx="8" />
+  <text class="moduleTitle danger" x="684" y="732" text-anchor="middle">403 Forbidden</text>
+  <path class="messagePath focus" d="M360 748 V772" marker-end="url(#flowArrowFocus)" />
+  <rect class="labelBg focus" x="372" y="750" width="42" height="20" rx="6" />
+  <text class="messageLabel focus" x="393" y="764" text-anchor="middle">true</text>
+
+  <rect class="phaseChip" x="32" y="754" width="200" height="26" rx="13" />
+  <text class="phaseText" x="132" y="772" text-anchor="middle">阶段三 · 业务执行与收尾</text>
+
+  <rect class="moduleRect" x="240" y="772" width="300" height="44" rx="8" />
+  <text class="moduleTitle" x="390" y="794" text-anchor="middle">业务方法执行</text>
+  <text class="moduleCaption" x="390" y="808" text-anchor="middle">Service → Mapper</text>
+  <path class="messagePath" d="M390 816 V836" marker-end="url(#flowArrowAuto)" />
+
+  <rect class="moduleRect" x="240" y="836" width="300" height="44" rx="8" />
+  <text class="moduleTitle" x="390" y="858" text-anchor="middle">登录拦截器 afterCompletion</text>
+  <text class="moduleCaption" x="390" y="872" text-anchor="middle">请求结束收尾</text>
+  <path class="messagePath return" d="M540 858 H600" marker-end="url(#flowArrowAuto)" />
+  <rect class="labelBg" x="600" y="846" width="148" height="24" rx="6" />
+  <text class="messageLabel" x="674" y="862" text-anchor="middle">clear SecurityContextHolder</text>
+</svg>

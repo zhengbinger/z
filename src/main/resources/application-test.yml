@@ -1,0 +1,52 @@
+# =====================================================================
+# 测试环境配置（UAT / SIT / 团队联调使用）
+# 特点：INFO 日志、关闭 SQL 打印、Knife4j 文档对内开放、连接测试库/测试 Redis
+# 注意：所有敏感配置必须通过环境变量注入，不要在此文件中写死！
+# =====================================================================
+
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 400
+    accept-count: 200
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:3306}/${DB_NAME:dam_db_test}?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME:test_user}
+    password: ${DB_PASSWORD:}
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 50
+      idle-timeout: 60000
+      max-lifetime: 1800000
+      connection-timeout: 10000
+      pool-name: DamHikariPoolTest
+
+  redis:
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+    database: ${REDIS_DB:1}
+    timeout: 3000ms
+    lettuce:
+      pool:
+        max-active: 32
+        max-idle: 16
+        min-idle: 4
+        max-wait: 3000ms
+
+# ========== 测试环境保留 Knife4j 方便联调，关闭 SQL 打印 ==========
+knife4j:
+  enable: true
+
+# ========== 测试环境：INFO 级别，减少日志噪音 ==========
+logging:
+  level:
+    org.dam: INFO
+    org.springframework.web: WARN
+    com.baomidou.mybatisplus: WARN

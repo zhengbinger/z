@@ -1,0 +1,59 @@
+# =====================================================================
+# 开发环境配置（本地开发、调试使用）
+# 特点：DEBUG 日志、打印 MyBatis SQL、Knife4j 文档开启、默认本地 DB/Redis
+# 注意：开发环境默认密码仅用于本地，提交代码时不要改为个人密码
+# =====================================================================
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 200
+    accept-count: 100
+
+spring:
+  # ========== 数据源（默认本地 MySQL，可用环境变量覆盖） ==========
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:3306}/${DB_NAME:dam_db}?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:Zb@123}
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      pool-name: DamHikariPoolDev
+
+  # ========== Redis（默认本地单机） ==========
+  redis:
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+    database: ${REDIS_DB:0}
+    timeout: 3000ms
+    lettuce:
+      pool:
+        max-active: 16
+        max-idle: 8
+        min-idle: 2
+        max-wait: 2000ms
+
+# ========== 开发环境开启 MyBatis SQL 打印 ==========
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# ========== 开发环境开启 Knife4j 文档（/doc.html） ==========
+knife4j:
+  enable: true
+
+# ========== 开发环境：DEBUG 级别日志便于排查 ==========
+logging:
+  level:
+    org.dam: DEBUG
+    org.springframework.web: INFO
+    com.baomidou.mybatisplus: WARN

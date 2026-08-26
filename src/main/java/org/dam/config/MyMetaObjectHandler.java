@@ -3,6 +3,7 @@ package org.dam.config;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
+import org.dam.component.security.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -46,11 +47,16 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
     /**
      * 获取当前操作用户
-     * TODO: 接入实际的用户上下文（如 SecurityUtils / TokenUtils）
+     * 优先从 {@link SecurityContextHolder} 中读取登录用户名；
+     * 若未登录（如系统初始化任务、单元测试、非 HTTP 请求线程等场景），则兜底返回 "system"
      *
-     * @return 当前用户标识
+     * @return 当前用户标识（用户名）
      */
     private String getCurrentUser() {
+        if (SecurityContextHolder.isLoggedIn()) {
+            String username = SecurityContextHolder.getCurrentUsername();
+            return username != null ? username : "system";
+        }
         return "system";
     }
 

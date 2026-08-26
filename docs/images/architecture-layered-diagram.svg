@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 620" width="100%" height="auto" role="img" aria-label="项目分层架构">
+  <style>
+    .surface { fill: #F7F7F8; }
+    .surface-muted { fill: #EFEFF2; }
+    .text { fill: #171717; }
+    .text-muted { fill: #52525B; }
+    .border { stroke: rgba(23, 23, 23, 0.12); }
+    .brand { stroke: #4B3FE3; }
+    .brand-soft { fill: #F2F7FF; }
+    .brand-text { fill: #1A1759; }
+    .accent { stroke: #27D2BF; }
+    .accent-text { fill: #0F766E; }
+
+    .moduleRect { fill: #F7F7F8; stroke: rgba(23, 23, 23, 0.11); stroke-width: 1; }
+    .moduleRect.focus { fill: #F2F7FF; stroke: #4B3FE3; stroke-width: 1.4; }
+    .moduleRect.storage { fill: #EAFBF8; stroke: #27D2BF; stroke-width: 1.2; }
+    .moduleRect.boundary { fill: rgba(247, 247, 248, 0.7); stroke: rgba(82, 82, 91, 0.32); stroke-width: 1; stroke-dasharray: 6 5; }
+
+    .moduleTitle { fill: #171717; font: 500 14px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+    .moduleTitle.focus { fill: #1A1759; }
+    .moduleTitle.storage { fill: #0F766E; }
+    .moduleCaption { fill: #52525B; font: 400 12px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+    .moduleCaption.focus { fill: #4B3FE3; }
+    .moduleCaption.storage { fill: #0F766E; }
+
+    .connectorPath { fill: none; stroke: rgba(82, 82, 91, 0.6); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .connectorPath.primary { stroke: #4B3FE3; stroke-width: 1.7; }
+
+    .arrowHead { fill: rgba(82, 82, 91, 0.72); }
+    .arrowHead.primary { fill: #4B3FE3; }
+
+    .labelBg { fill: #F7F7F8; stroke: rgba(23, 23, 23, 0.09); }
+    .labelBg.primary { fill: #F2F7FF; stroke: rgba(75, 63, 227, 0.42); }
+    .labelText { fill: #171717; font: 500 12px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+    .labelText.primary { fill: #1A1759; }
+
+    .phaseChip { fill: rgba(247, 247, 248, 0.56); stroke: rgba(23, 23, 23, 0.08); }
+    .phaseText { fill: #52525B; font: 500 12px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+  </style>
+
+  <defs>
+    <marker id="archArrowAuto" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="arrowHead" d="M1 1 L7 4 L1 7 Z" />
+    </marker>
+    <marker id="archArrowPrimary" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="arrowHead primary" d="M1 1 L7 4 L1 7 Z" />
+    </marker>
+  </defs>
+
+  <rect class="surface-muted" x="0" y="0" width="760" height="620" />
+
+  <rect class="phaseChip" x="40" y="20" width="680" height="26" rx="13" />
+  <text class="phaseText" x="380" y="38" text-anchor="middle">请求处理主线：拦截器鉴权 → Controller 参数校验 → RbacAspect 注解鉴权 → Service 事务/缓存 → Mapper 持久化</text>
+
+  <rect class="moduleRect" x="240" y="68" width="280" height="44" rx="8" />
+  <text class="moduleTitle" x="380" y="96" text-anchor="middle">客户端 / 前端</text>
+
+  <path class="connectorPath primary" d="M380 112 V137" marker-end="url(#archArrowPrimary)" />
+  <rect class="labelBg primary" x="394" y="116" width="232" height="20" rx="6" />
+  <text class="labelText primary" x="510" y="130" text-anchor="middle">HTTP (Authorization: Bearer)</text>
+
+  <rect class="moduleRect" x="140" y="140" width="480" height="60" rx="8" />
+  <text class="moduleTitle" x="380" y="162" text-anchor="middle">拦截器层 TokenAuthInterceptor（WebMvcConfig 注册）</text>
+  <text class="moduleCaption" x="380" y="184" text-anchor="middle">解析 access_token → 注入 SecurityContextHolder(ThreadLocal)</text>
+
+  <path class="connectorPath primary" d="M380 200 V225" marker-end="url(#archArrowPrimary)" />
+  <rect class="labelBg primary" x="394" y="204" width="160" height="20" rx="6" />
+  <text class="labelText primary" x="474" y="218" text-anchor="middle">已认证 SecurityContext</text>
+
+  <rect class="moduleRect" x="140" y="228" width="480" height="60" rx="8" />
+  <text class="moduleTitle" x="380" y="250" text-anchor="middle">Controller 层</text>
+  <text class="moduleCaption" x="380" y="272" text-anchor="middle">参数校验(@Valid) · 路由 · 声明式鉴权(@RequiresPermission) · 返回 Result&lt;T&gt;</text>
+
+  <path class="connectorPath primary" d="M380 288 V313" marker-end="url(#archArrowPrimary)" />
+  <rect class="labelBg primary" x="394" y="292" width="140" height="20" rx="6" />
+  <text class="labelText primary" x="464" y="306" text-anchor="middle">RbacAspect(@Before)</text>
+
+  <rect class="moduleRect focus" x="140" y="316" width="480" height="60" rx="8" />
+  <text class="moduleTitle focus" x="380" y="338" text-anchor="middle">Service 层</text>
+  <text class="moduleCaption focus" x="380" y="360" text-anchor="middle">业务逻辑 · 事务控制(@Transactional) · 缓存(@Cacheable) · Entity↔DTO/VO 转换 · 脱敏</text>
+
+  <path class="connectorPath primary" d="M380 376 V392" />
+  <path class="connectorPath primary" d="M230 392 H530" />
+  <path class="connectorPath primary" d="M230 392 V407" marker-end="url(#archArrowPrimary)" />
+  <path class="connectorPath" d="M530 392 V407" marker-end="url(#archArrowAuto)" />
+  <rect class="labelBg" x="544" y="380" width="140" height="20" rx="6" />
+  <text class="labelText" x="614" y="394" text-anchor="middle">复用组件 / 观察者</text>
+
+  <rect class="moduleRect" x="80" y="410" width="300" height="60" rx="8" />
+  <text class="moduleTitle" x="230" y="432" text-anchor="middle">Mapper 层</text>
+  <text class="moduleCaption" x="230" y="454" text-anchor="middle">BaseMapper + XML · CRUD + 自定义 SQL</text>
+
+  <rect class="moduleRect" x="400" y="410" width="300" height="60" rx="8" />
+  <text class="moduleTitle" x="550" y="432" text-anchor="middle">Component 组件层</text>
+  <text class="moduleCaption" x="550" y="454" text-anchor="middle">security: JWT/上下文/切面 · status: 观察者模式</text>
+
+  <path class="connectorPath" d="M230 470 V495" marker-end="url(#archArrowAuto)" />
+  <rect class="labelBg" x="244" y="474" width="80" height="20" rx="6" />
+  <text class="labelText" x="284" y="488" text-anchor="middle">JDBC</text>
+
+  <path class="connectorPath" d="M530 470 V495" marker-end="url(#archArrowAuto)" />
+  <rect class="labelBg" x="544" y="474" width="120" height="20" rx="6" />
+  <text class="labelText" x="604" y="488" text-anchor="middle">缓存 / Token</text>
+
+  <rect class="moduleRect storage" x="80" y="498" width="300" height="80" rx="8" />
+  <text class="moduleTitle storage" x="230" y="522" text-anchor="middle">MySQL 8</text>
+  <text class="moduleCaption storage" x="230" y="544" text-anchor="middle">sys_user / sys_role / sys_permission ...</text>
+  <text class="moduleCaption storage" x="230" y="562" text-anchor="middle">持久化存储</text>
+
+  <rect class="moduleRect storage" x="400" y="498" width="300" height="80" rx="8" />
+  <text class="moduleTitle storage" x="550" y="522" text-anchor="middle">Redis</text>
+  <text class="moduleCaption storage" x="550" y="544" text-anchor="middle">auth:refresh:{userId} · rbac:roles / rbac:perms</text>
+  <text class="moduleCaption storage" x="550" y="562" text-anchor="middle">缓存 / Token 存储</text>
+</svg>

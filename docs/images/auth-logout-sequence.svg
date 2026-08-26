@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 490" width="100%" height="auto" role="img" aria-label="登出流程时序图">
+  <style>
+    .surface-muted { fill: #EFEFF2; }
+    .text { fill: #171717; }
+    .text-muted { fill: #52525B; }
+
+    .participantBox { fill: #F7F7F8; stroke: rgba(23, 23, 23, 0.11); stroke-width: 1; }
+    .participantBox.focus { fill: #F2F7FF; stroke: #4B3FE3; }
+    .participantBox.external { stroke: rgba(82, 82, 91, 0.42); }
+    .participantLabel { fill: #171717; font: 500 12px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+    .participantLabel.focus { fill: #1A1759; }
+    .participantCaption { fill: #52525B; font: 400 12px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+
+    .lifeline { fill: none; stroke: rgba(82, 82, 91, 0.42); stroke-width: 1.2; stroke-dasharray: 5 7; stroke-linecap: round; }
+    .activation { fill: #F7F7F8; stroke: rgba(23, 23, 23, 0.11); stroke-width: 1; }
+    .activation.focus { fill: #F2F7FF; stroke: #4B3FE3; }
+
+    .messagePath { fill: none; stroke: #52525B; stroke-width: 1.5; }
+    .messagePath.return { stroke-dasharray: 7 6; }
+    .messagePath.focus { stroke: #4B3FE3; stroke-width: 1.8; }
+
+    .arrowHead { fill: #52525B; }
+    .arrowHead.focus { fill: #4B3FE3; }
+
+    .labelBg { fill: #F7F7F8; stroke: rgba(23, 23, 23, 0.09); }
+    .labelBg.focus { fill: #F2F7FF; stroke: rgba(75, 63, 227, 0.42); }
+    .messageLabel { fill: #171717; font: 500 12px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+    .messageLabel.focus { fill: #1A1759; }
+
+    .phaseChip { fill: rgba(247, 247, 248, 0.56); stroke: rgba(23, 23, 23, 0.08); }
+    .phaseText { fill: #52525B; font: 500 12px "SF Pro Text", "PingFang SC", system-ui, sans-serif; }
+  </style>
+
+  <defs>
+    <marker id="seqArrowAuto" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="arrowHead" d="M1 1 L7 4 L1 7 Z" />
+    </marker>
+    <marker id="seqArrowFocus" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path class="arrowHead focus" d="M1 1 L7 4 L1 7 Z" />
+    </marker>
+  </defs>
+
+  <rect class="surface-muted" x="0" y="0" width="720" height="490" />
+
+  <rect class="phaseChip" x="40" y="20" width="160" height="26" rx="13" />
+  <text class="phaseText" x="120" y="38" text-anchor="middle">阶段1 · 取上下文</text>
+  <rect class="phaseChip" x="440" y="20" width="200" height="26" rx="13" />
+  <text class="phaseText" x="540" y="38" text-anchor="middle">阶段2 · 吊销 refresh</text>
+
+  <g transform="translate(30 60)">
+    <rect class="participantBox external" width="110" height="50" rx="8" />
+    <text class="participantLabel" x="55" y="22" text-anchor="middle">前端</text>
+    <text class="participantCaption" x="55" y="40" text-anchor="middle">浏览器 / App</text>
+  </g>
+  <g transform="translate(180 60)">
+    <rect class="participantBox" width="130" height="50" rx="8" />
+    <text class="participantLabel" x="65" y="22" text-anchor="middle">AuthController</text>
+    <text class="participantCaption" x="65" y="40" text-anchor="middle">REST 入口</text>
+  </g>
+  <g transform="translate(350 60)">
+    <rect class="participantBox" width="140" height="50" rx="8" />
+    <text class="participantLabel" x="70" y="22" text-anchor="middle">AuthServiceImpl</text>
+    <text class="participantCaption" x="70" y="40" text-anchor="middle">业务事务</text>
+  </g>
+  <g transform="translate(540 60)">
+    <rect class="participantBox focus" width="150" height="50" rx="8" />
+    <text class="participantLabel focus" x="75" y="22" text-anchor="middle">RefreshTokenService</text>
+    <text class="participantCaption" x="75" y="40" text-anchor="middle">Redis · 焦点</text>
+  </g>
+
+  <path class="lifeline" d="M85 110 V470" />
+  <path class="lifeline" d="M245 110 V470" />
+  <path class="lifeline" d="M420 110 V470" />
+  <path class="lifeline" d="M615 110 V470" />
+
+  <rect class="activation" x="237" y="160" width="16" height="295" rx="5" />
+  <rect class="activation" x="412" y="245" width="16" height="175" rx="5" />
+  <rect class="activation focus" x="607" y="325" width="16" height="45" rx="5" />
+
+  <path class="messagePath focus" d="M95 165 H237" marker-end="url(#seqArrowFocus)" />
+  <rect class="labelBg focus" x="106" y="153" width="120" height="22" rx="6" />
+  <text class="messageLabel focus" x="166" y="169" text-anchor="middle">POST /auth/logout</text>
+
+  <path class="messagePath" d="M253 205 h40 v15 h-40" marker-end="url(#seqArrowAuto)" />
+  <rect class="labelBg" x="298" y="193" width="130" height="22" rx="6" />
+  <text class="messageLabel" x="363" y="209" text-anchor="middle">getCurrentUserId()</text>
+
+  <path class="messagePath" d="M253 245 H412" marker-end="url(#seqArrowAuto)" />
+  <rect class="labelBg" x="282" y="233" width="100" height="22" rx="6" />
+  <text class="messageLabel" x="332" y="249" text-anchor="middle">logout(userId)</text>
+
+  <path class="messagePath" d="M428 285 h40 v15 h-40" marker-end="url(#seqArrowAuto)" />
+  <rect class="labelBg" x="478" y="273" width="180" height="22" rx="6" />
+  <text class="messageLabel" x="568" y="289" text-anchor="middle">@CacheEvict rbac:roles/perms</text>
+
+  <path class="messagePath focus" d="M428 325 H607" marker-end="url(#seqArrowFocus)" />
+  <rect class="labelBg focus" x="452" y="313" width="130" height="22" rx="6" />
+  <text class="messageLabel focus" x="517" y="329" text-anchor="middle">revoke(userId)</text>
+
+  <path class="messagePath return" d="M607 365 H428" marker-end="url(#seqArrowAuto)" />
+  <rect class="labelBg" x="435" y="353" width="165" height="22" rx="6" />
+  <text class="messageLabel" x="517" y="369" text-anchor="middle">DEL auth:refresh:{userId}</text>
+
+  <path class="messagePath return" d="M412 405 H253" marker-end="url(#seqArrowAuto)" />
+  <rect class="labelBg" x="302" y="393" width="60" height="22" rx="6" />
+  <text class="messageLabel" x="332" y="409" text-anchor="middle">true</text>
+
+  <path class="messagePath return" d="M237 445 H95" marker-end="url(#seqArrowAuto)" />
+  <rect class="labelBg" x="101" y="433" width="130" height="22" rx="6" />
+  <text class="messageLabel" x="166" y="449" text-anchor="middle">Result&lt;Boolean=true&gt;</text>
+</svg>

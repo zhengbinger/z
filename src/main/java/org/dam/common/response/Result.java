@@ -89,14 +89,14 @@ public class Result<T> implements Serializable {
     }
 
     /**
-     * 失败返回（默认失败码）
+     * 失败返回（默认使用通用失败码 COMMON_FAILED）
      *
      * @param message 提示消息
      * @param <T>     数据泛型
      * @return 失败结果
      */
     public static <T> Result<T> failed(String message) {
-        return failed(ResultCode.FAILED.getCode(), message);
+        return failed(ResultCode.COMMON_FAILED.getCode(), message);
     }
 
     /**
