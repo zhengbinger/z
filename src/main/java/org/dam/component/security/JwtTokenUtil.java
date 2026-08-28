@@ -84,11 +84,16 @@ public class JwtTokenUtil {
      * @return 用户 ID，解析失败返回 null
      */
     public Long getUserId(String token) {
-        Object value = parseToken(token).getPayload("userId");
-        if (value == null) {
+        try {
+            Object value = parseToken(token).getPayload("userId");
+            if (value == null) {
+                return null;
+            }
+            return Long.valueOf(value.toString());
+        } catch (Exception e) {
+            log.warn("解析 userId 失败：{}", e.getMessage());
             return null;
         }
-        return Long.valueOf(value.toString());
     }
 
     /**
@@ -98,8 +103,13 @@ public class JwtTokenUtil {
      * @return 用户名，解析失败返回 null
      */
     public String getUsername(String token) {
-        Object value = parseToken(token).getPayload("username");
-        return value == null ? null : value.toString();
+        try {
+            Object value = parseToken(token).getPayload("username");
+            return value == null ? null : value.toString();
+        } catch (Exception e) {
+            log.warn("解析 username 失败：{}", e.getMessage());
+            return null;
+        }
     }
 
     /**
@@ -110,8 +120,13 @@ public class JwtTokenUtil {
      * @return Token 类型字符串，解析失败返回 null
      */
     public String getTokenType(String token) {
-        Object value = parseToken(token).getPayload("tokenType");
-        return value == null ? null : value.toString();
+        try {
+            Object value = parseToken(token).getPayload("tokenType");
+            return value == null ? null : value.toString();
+        } catch (Exception e) {
+            log.warn("解析 tokenType 失败：{}", e.getMessage());
+            return null;
+        }
     }
 
     /**

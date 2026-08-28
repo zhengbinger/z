@@ -1,0 +1,68 @@
+# =====================================================================
+# 单元测试 / 集成测试配置（unit profile）
+# 特点：纯内存 H2 + embedded-redis，不依赖外部 MySQL/Redis
+# 与 application-test.yml（UAT 联调，依赖真实 MySQL+Redis）严格隔离
+# =====================================================================
+
+server:
+  port: 0
+  servlet:
+    context-path: /
+
+spring:
+  profiles:
+    active: unit
+
+  # ========== H2 内存数据库（MySQL 兼容模式） ==========
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:dam_test;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_LOWER=TRUE
+    username: sa
+    password:
+
+  # ========== embedded-redis（避开本机真实 Redis 的 6379 端口） ==========
+  redis:
+    host: 127.0.0.1
+    port: 6370
+    database: 0
+    timeout: 3000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 4
+        min-idle: 1
+        max-wait: 2000ms
+
+  # ========== Spring Cache 抽象层（与生产一致，底层 Redis） ==========
+  cache:
+    type: redis
+
+  # ========== 启动时加载 schema-h2.sql + 测试数据 ==========
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:sql/schema-h2.sql
+      data-locations: classpath:sql/data-h2.sql
+      continue-on-error: false
+
+# ========== 测试环境 JWT 配置 ==========
+jwt:
+  secret: dam-test-secret-key-must-be-at-least-32-bytes-long
+  issuer: dam-test
+  access-token-expire-minutes: 120
+  refresh-token-expire-days: 7
+
+# ========== 测试环境关闭 Knife4j ==========
+knife4j:
+  enable: false
+  production: true
+
+# ========== 测试日志：DEBUG 业务代码 + 压低框架噪音 ==========
+logging:
+  level:
+    root: WARN
+    org.dam: DEBUG
+    org.springframework: WARN
+    org.springframework.test: WARN
+    com.baomidou.mybatisplus: WARN
+    com.zaxxer.hikari: WARN
