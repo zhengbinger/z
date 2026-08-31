@@ -2,6 +2,7 @@ package org.dam.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.dam.component.dict.annotation.DictValidator;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -68,6 +69,7 @@ public class UserSaveDTO implements Serializable {
      * 状态（0-禁用，1-启用）
      */
     @Schema(description = "状态（0-禁用，1-启用）")
+    @DictValidator(dictCode = "common_status", message = "用户状态值不合法，仅允许 0-禁用 / 1-启用")
     private Integer status;
 
 }

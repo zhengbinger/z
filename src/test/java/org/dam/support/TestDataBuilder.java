@@ -2,10 +2,13 @@ package org.dam.support;
 
 import org.dam.dto.AuthLoginDTO;
 import org.dam.dto.RefreshTokenDTO;
+import org.dam.entity.DictData;
+import org.dam.entity.DictType;
 import org.dam.entity.Permission;
 import org.dam.entity.Role;
 import org.dam.entity.User;
 import org.dam.entity.UserAuth;
+import org.dam.vo.DictItemVO;
 import org.dam.vo.TokenVO;
 
 import static org.dam.support.TestConstants.*;
@@ -224,6 +227,98 @@ public final class TestDataBuilder {
             permission.setParentId(parentId);
             permission.setStatus(status);
             return permission;
+        }
+    }
+
+    // ========== DictType ==========
+    public static DictTypeBuilder dictType() {
+        return new DictTypeBuilder();
+    }
+
+    public static final class DictTypeBuilder {
+        private Long id = 1L;
+        private String dictCode = "user_status";
+        private String dictNameZh = "用户状态";
+        private String dictNameEn = "User Status";
+        private Integer status = 1;
+
+        public DictTypeBuilder id(Long id) { this.id = id; return this; }
+        public DictTypeBuilder code(String code) { this.dictCode = code; return this; }
+        public DictTypeBuilder nameZh(String nameZh) { this.dictNameZh = nameZh; return this; }
+        public DictTypeBuilder nameEn(String nameEn) { this.dictNameEn = nameEn; return this; }
+
+        public DictType build() {
+            DictType type = new DictType();
+            type.setId(id);
+            type.setDictCode(dictCode);
+            type.setDictNameZh(dictNameZh);
+            type.setDictNameEn(dictNameEn);
+            type.setStatus(status);
+            return type;
+        }
+    }
+
+    // ========== DictData ==========
+    public static DictDataBuilder dictData() {
+        return new DictDataBuilder();
+    }
+
+    public static final class DictDataBuilder {
+        private Long id = 1L;
+        private Long dictTypeId = 1L;
+        private String dictLabelZh = "禁用";
+        private String dictLabelEn = "Disabled";
+        private String dictValue = "0";
+        private String cssClass = "danger";
+        private Integer sort = 1;
+        private Integer status = 1;
+
+        public DictDataBuilder id(Long id) { this.id = id; return this; }
+        public DictDataBuilder typeId(Long typeId) { this.dictTypeId = typeId; return this; }
+        public DictDataBuilder labelZh(String labelZh) { this.dictLabelZh = labelZh; return this; }
+        public DictDataBuilder labelEn(String labelEn) { this.dictLabelEn = labelEn; return this; }
+        public DictDataBuilder value(String value) { this.dictValue = value; return this; }
+        public DictDataBuilder cssClass(String cssClass) { this.cssClass = cssClass; return this; }
+        public DictDataBuilder sort(Integer sort) { this.sort = sort; return this; }
+        public DictDataBuilder disabled() { this.status = 0; return this; }
+
+        public DictData build() {
+            DictData data = new DictData();
+            data.setId(id);
+            data.setDictTypeId(dictTypeId);
+            data.setDictLabelZh(dictLabelZh);
+            data.setDictLabelEn(dictLabelEn);
+            data.setDictValue(dictValue);
+            data.setCssClass(cssClass);
+            data.setSort(sort);
+            data.setStatus(status);
+            return data;
+        }
+    }
+
+    // ========== DictItemVO ==========
+    public static DictItemVOBuilder dictItemVO() {
+        return new DictItemVOBuilder();
+    }
+
+    public static final class DictItemVOBuilder {
+        private String value = "0";
+        private String label = "禁用";
+        private String cssClass = "danger";
+        private Integer sort = 1;
+
+        public DictItemVOBuilder value(String value) { this.value = value; return this; }
+        public DictItemVOBuilder label(String label) { this.label = label; return this; }
+        public DictItemVOBuilder cssClass(String cssClass) { this.cssClass = cssClass; return this; }
+        public DictItemVOBuilder sort(Integer sort) { this.sort = sort; return this; }
+
+        public DictItemVO build() {
+            DictItemVO vo = new DictItemVO();
+            vo.setValue(value);
+            vo.setLabel(label);
+            vo.setCssClass(cssClass);
+            vo.setSort(sort);
+            return vo;
         }
     }
 }

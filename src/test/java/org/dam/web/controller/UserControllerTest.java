@@ -5,6 +5,7 @@ import org.dam.common.exception.BizException;
 import org.dam.common.enums.ResultCode;
 import org.dam.controller.UserController;
 import org.dam.dto.UserSaveDTO;
+import org.dam.service.DictService;
 import org.dam.service.UserService;
 import org.dam.vo.UserVO;
 import org.junit.jupiter.api.DisplayName;
@@ -43,6 +44,11 @@ class UserControllerTest extends BaseControllerMvcTest {
 
     @MockBean
     private UserService userService;
+
+    // @DictValidator 校验器通过 SpringConstraintValidatorFactory 注入 DictService
+    // 切片测试不扫描 service 包，需提供 mock bean 否则验证器实例化抛 NoSuchBeanDefinitionException
+    @MockBean
+    private DictService dictService;
 
     // =====================================================================
     // 场景组: 查询 GET
@@ -97,6 +103,8 @@ class UserControllerTest extends BaseControllerMvcTest {
         void should_returnNewUserId_when_saveSuccess() throws Exception {
             // given
             given(userService.saveUser(any(UserSaveDTO.class))).willReturn(100L);
+            // @DictValidator 校验 status=1 是否在 common_status 字典合法范围内
+            given(dictService.isValidValue("common_status", "1")).willReturn(true);
 
             UserSaveDTO dto = new UserSaveDTO();
             dto.setUsername("newuser");
